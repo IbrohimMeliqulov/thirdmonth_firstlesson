@@ -1,10 +1,20 @@
 import { Router } from "express";
-import ordersController from "../controllers/orders.controller.js";
+import orderController from "../controllers/orders.controller.js";
+import { validationFactory } from "../middleware/validationFactory.js";
+import { validation } from "../validations/validation.js";
 
 export const orderRouter = Router();
 
 orderRouter
-  .post("/", ordersController.POST)
-  .get("/:id", ordersController.GET)
-  .put("/:id", ordersController.UPDATE)
-  .delete("/:id", ordersController.DELETE);
+  .post(
+    "/",
+    validationFactory(validation.orderSchema),
+    orderController.createOrder
+  )
+  .get("/:id", orderController.getAllOrders)
+  .put(
+    "/:id",
+    validationFactory(validation.orderUpdateSchema),
+    orderController.updateOrder
+  )
+  .delete("/:id", orderController.deleteOrder);

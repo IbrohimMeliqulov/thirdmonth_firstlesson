@@ -1,10 +1,20 @@
 import { Router } from "express";
-import paymentsController from "../controllers/payments.controller.js";
+import paymentController from "../controllers/payments.controller.js";
+import { validationFactory } from "../middleware/validationFactory.js";
+import { validation } from "../validations/validation.js";
 
 export const paymentRouter = Router();
 
 paymentRouter
-  .post("/", paymentsController.POST)
-  .get("/:id", paymentsController.GET)
-  .put("/:id", paymentsController.UPDATE)
-  .delete("/:id", paymentsController.DELETE);
+  .post(
+    "/",
+    validationFactory(validation.paymentSchema),
+    paymentController.createPayment
+  )
+  .get("/:id", paymentController.getAllPayments)
+  .put(
+    "/:id",
+    validationFactory(validation.paymentUpdateSchema),
+    paymentController.updatePayment
+  )
+  .delete("/:id", paymentController.deletePayment);

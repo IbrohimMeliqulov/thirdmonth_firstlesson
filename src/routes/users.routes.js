@@ -1,11 +1,20 @@
 import { Router } from "express";
-import usersController from "../controllers/users.controller.js";
+import { userController } from "../controllers/users.controller.js";
+import { validationFactory } from "../middleware/validationFactory.js";
+import { validation } from "../validations/validation.js";
 
 export const userRouter = Router();
 
 userRouter
-  .get("/", usersController.GET)
-  .post("/", usersController.POST)
-  .get("/:id", usersController.getOne)
-  .delete("/:id", usersController.DELETE)
-  .put("/:id", usersController.UPDATE);
+  .get("/", userController.getAllUsers)
+  .post(
+    "/",
+    validationFactory(validation.userSchema),
+    userController.createUser
+  )
+  .delete("/:id", userController.deleteUser)
+  .put(
+    "/:id",
+    validationFactory(validation.userUpdateSchema),
+    userController.updateUser
+  );
