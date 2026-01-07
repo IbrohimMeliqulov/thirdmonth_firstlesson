@@ -10,7 +10,7 @@ class OrderClass {
 
     if (percent > amount) {
       return {
-        status: data.status,
+        status: 400,
         message: "Boshlang'ich to'lova yetarli emas",
       };
     }

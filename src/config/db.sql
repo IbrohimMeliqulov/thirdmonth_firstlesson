@@ -5,6 +5,7 @@ CREATE table users (
     full_name varchar(120) not NULL,
     age INT not NULL,
     email VARCHAR(80) not NULL UNIQUE,
+    password VARCHAR(250) not NULL,
     phone VARCHAR(40) not NULL
 );
 
