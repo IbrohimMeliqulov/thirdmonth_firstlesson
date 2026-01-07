@@ -4,16 +4,18 @@ class Validation {
   constructor() {}
 
   userSchema = Joi.object({
-    full_name: Joi.string().required().alphanum(),
+    full_name: Joi.string().required(),
     age: Joi.number().required(),
     email: Joi.string().email().required(),
+    password: Joi.string().required().min(3).max(20),
     phone: Joi.string().required(),
   });
 
   userUpdateSchema = Joi.object({
-    full_name: Joi.string().alphanum(),
+    full_name: Joi.string(),
     age: Joi.number(),
     email: Joi.string().email(),
+    password: Joi.string().min(3).max(20),
     phone: Joi.string(),
   });
 

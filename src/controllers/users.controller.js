@@ -3,12 +3,21 @@ import { userClass } from "../services/users.service.js";
 class UserController {
   constructor() {}
 
-  async createUser(req, res) {
-    const user = await userClass.createUser(req.body);
-    return res.status(201).json({
-      status: 201,
-      message: "user created",
-      data: user,
+  async register(req, res) {
+    const data = await userClass.register(req.body);
+    return res.status(data.status).json({
+      status: data.status,
+      message: data.message,
+      data,
+    });
+  }
+
+  async login(req, res) {
+    const data = await userClass.login(req.body);
+    return res.status(data.status).json({
+      status: data.status,
+      message: data.message,
+      token: data.token,
     });
   }
 
@@ -17,7 +26,7 @@ class UserController {
     return res.status(200).json({
       status: 200,
       message: "Users",
-      data: users.rows[0],
+      data: users,
     });
   }
   async updateUser(req, res) {

@@ -8,9 +8,9 @@ export const userRouter = Router();
 userRouter
   .get("/", userController.getAllUsers)
   .post(
-    "/",
+    "/register",
     validationFactory(validation.userSchema),
-    userController.createUser
+    userController.register
   )
   .delete("/:id", userController.deleteUser)
   .put(
